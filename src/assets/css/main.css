@@ -1,0 +1,150 @@
+/* General styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #181818; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+/* Header styles */
+.header {
+  background: #1a1a1a; /* Darker header background */
+  color: #f5c518; /* Gold text color */
+  padding: 15px 20px; /* Header padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed; /* Fixed position */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Above other content */
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 250px; /* Sidebar width */
+  height: 100vh; /* Full height */
+  background: #222; /* Sidebar background */
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: width 0.3s, opacity 0.3s; /* Smooth transition */
+  z-index: 900; /* Below header */
+}
+
+.sidebar.closed {
+  width: 70px; /* Width when collapsed */
+  opacity: 0.9; /* Slightly transparent when collapsed */
+}
+
+/* Sidebar links */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: #f5c518; /* Link color */
+  text-decoration: none;
+  display: flex; /* Flexbox for icon and text */
+  align-items: center; /* Center items vertically */
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(255, 215, 0, 0.2); /* Hover effect */
+}
+
+/* Sidebar icons */
+.sidebar ul li i {
+  margin-right: 10px; /* Space between icon and text */
+}
+
+/* Main content area */
+.main-content {
+  margin-left: 250px; /* Space for sidebar */
+  padding: 20px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar.closed + .main-content {
+  margin-left: 70px; /* Adjust margin when sidebar is closed */
+}
+
+/* Auth page styles */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #121212; /* Darker background for auth layout */
+}
+
+.auth-box {
+  background: #1e1e1e; /* Auth box background */
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  width: 300px; /* Fixed width */
+}
+
+.auth-box input {
+  width: 100%; /* Full width for input fields */
+  padding: 10px;
+  margin: 10px 0; /* Spacing between inputs */
+  border: 1px solid #444; /* Input border */
+  border-radius: 5px;
+  background: #333; /* Input background */
+  color: #fff; /* Input text color */
+}
+
+.auth-box button {
+  width: 100%; /* Full width for button */
+  padding: 10px;
+  background: #f5c518; /* Button background */
+  color: #121212; /* Button text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-box button:hover {
+  background: #f4b31c; /* Hover effect for button */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px; /* Collapse sidebar on smaller screens */
+  }
+
+  .main-content {
+    margin-left: 70px; /* Adjust margin accordingly */
+  }
+
+  .header {
+    padding: 10px 15px; /* Smaller header padding on mobile */
+  }
+
+  .sidebar.closed {
+    width: 0; /* Hide sidebar completely on mobile when collapsed */
+  }
+
+  .sidebar ul {
+    padding-left: 5px; /* Adjust padding for mobile */
+  }
+
+  .sidebar ul li a {
+    padding: 10px; /* Adjust padding for mobile */
+    font-size: 14px; /* Smaller font size */
+  }
+}
