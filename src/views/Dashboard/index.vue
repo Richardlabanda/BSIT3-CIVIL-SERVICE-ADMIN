@@ -2,21 +2,18 @@
   <div class="dashboard-container">
     <Header />
     <div class="dashboard-content">
-      <!-- Sidebar with user list -->
       <Sidebar />
 
       <div class="content-area">
         <h1>Dashboard</h1>
         <p>Welcome to the admin dashboard!</p>
 
-        <!-- Statistics Overview -->
         <div class="dashboard-stats">
           <p><strong>Total Users:</strong> {{ totalUsers }}</p>
-          <p><strong>Total Questionnaires:</strong> {{ totalQuestionnaires }}</p> <!-- Display total questionnaires -->
+          <p><strong>Total Questionnaires:</strong> {{ totalQuestionnaires }}</p> 
           <p v-if="selectedUser"><strong>Tests Passed:</strong> {{ passedCount }}</p>
         </div>
 
-        <!-- Users List -->
         <div class="user-list">
           <h2>Users</h2>
           <ul>
@@ -31,7 +28,6 @@
           </ul>
         </div>
 
-        <!-- Display User Test Results -->
         <div v-if="selectedUser" class="user-results">
           <div class="user-results-header">
             <h3>{{ selectedUser.name }}'s Test Results</h3>
@@ -42,7 +38,7 @@
               <tr>
                 <th>Category</th>
                 <th>Score</th>
-                <th>Percentage</th> <!-- Added column for percentage -->
+                <th>Percentage</th> 
                 <th>Date Taken</th>
               </tr>
             </thead>
@@ -50,7 +46,7 @@
               <tr v-for="result in userTestResults" :key="result.id">
                 <td>{{ result.category }}</td>
                 <td>{{ result.score }}</td>
-                <td>{{ calculatePercentage(result) }}%</td> <!-- Display percentage -->
+                <td>{{ calculatePercentage(result) }}%</td> 
                 <td>{{ new Date(result.taken_at).toLocaleString() }}</td>
               </tr>
             </tbody>
@@ -90,7 +86,6 @@ export default defineComponent({
       }
     };
 
-    // Fetch user results
     const fetchUserResults = async (userId: number) => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/user_scores/${userId}`);
@@ -102,16 +97,13 @@ export default defineComponent({
       }
     };
 
-    // Close user results
     const closeUserResults = () => {
       selectedUser.value = null;
       userTestResults.value = [];
     };
 
-    // Get total users
     const totalUsers = computed(() => users.value.length);
 
-    // Get passed tests count based on percentage
     const passedCount = computed(() => {
       return userTestResults.value.filter(result => {
         const percentage = calculatePercentage(result);
@@ -119,21 +111,18 @@ export default defineComponent({
       }).length;
     });
 
-    // Fetch total number of questionnaires
     const fetchTotalQuestionnaires = async () => {
       try {
         const response = await fetch("http://127.0.0.1:8000/api/questions");
         const data = await response.json();
-        totalQuestionnaires.value = data.length; // Assuming API returns an array of questions
-        questions.value = data; // Store the fetched questions to calculate categories later
+        totalQuestionnaires.value = data.length; 
+        questions.value = data; 
       } catch (error) {
         console.error("Failed to fetch total questionnaires:", error);
       }
     };
 
-    // Calculate the percentage score based on the category
     const calculatePercentage = (result: any) => {
-      // Filter questions by the same category as the test
       const categoryQuestions = questions.value.filter(question => question.category === result.category);
       const totalQuestions = categoryQuestions.length;
 
@@ -141,13 +130,12 @@ export default defineComponent({
         return 0;
       }
 
-      const correctAnswers = result.score; // Assuming score is the number of correct answers
+      const correctAnswers = result.score; 
 
       const percentage = (correctAnswers / totalQuestions) * 100;
       return percentage.toFixed(2);
     };
 
-    // Fetch data when component is mounted
     onMounted(() => {
       fetchUsers();
       fetchTotalQuestionnaires();
@@ -160,9 +148,9 @@ export default defineComponent({
       fetchUserResults,
       closeUserResults,
       totalUsers,
-      passedCount,  // Now this shows the count of tests with >= 80% score
+      passedCount,  
       totalQuestionnaires,
-      calculatePercentage, // Return the calculatePercentage method
+      calculatePercentage, 
     };
   },
 });
